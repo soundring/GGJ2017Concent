@@ -8,29 +8,30 @@ public class CamerMove : MonoBehaviour {
     private float maxMoveClamp = 0.3f;
     private int clampedHeight;
     private GameObject player;
+    private GameObject canvas;
+    private Vector2 playerOldPos, playerNewPos;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        canvas = GameObject.Find("Canvas").gameObject;
     }
 
     // Use this for initialization
     void Start () {
-        clampedHeight = (int)((float)Screen.currentResolution.height * maxMoveClamp);
+        clampedHeight = (int)(Screen.height * maxMoveClamp);
+        Debug.Log(clampedHeight);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        var screenPointOfPlayer = RectTransformUtility.WorldToScreenPoint(Camera.main, player.transform.position);
-        if(screenPointOfPlayer.y < clampedHeight)
+        playerNewPos = player.transform.position;
+        var plsyerMoveMagni = (playerNewPos - playerOldPos).magnitude;
+        var playerScreenSpace = Camera.main.WorldToScreenPoint(player.transform.position);
+        if (playerScreenSpace.y < clampedHeight)
         {
-            var diffY = Mathf.Abs(screenPointOfPlayer.y - clampedHeight);
-            var newPosY = this.transform.position.y - diffY;
-            this.transform.position = new Vector3(0, newPosY, -10);
-            Debug.Log("screenPointOfPlayer = " + screenPointOfPlayer);
-            Debug.Log("clampedHeight = " + clampedHeight);
-            Debug.Log("diffY = " + diffY);
+            this.transform.position -= new Vector3(0, plsyerMoveMagni, 0);
         }
-
+        playerOldPos = playerNewPos;
     }
 }
