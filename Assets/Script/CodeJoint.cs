@@ -55,6 +55,7 @@ public class CodeJoint : MonoBehaviour {
                 countDownText.text = "";
                 StopCoroutine("StartCountDOwn");
                 GameValueManager.SetGetIsPlayingGame = true;
+                GameValueManager.SetGetIsStarted = true;
                 break;
             }
         }

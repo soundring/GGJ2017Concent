@@ -21,7 +21,10 @@ public class PlayerMove : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         //自動で下へ移動
-        rb.AddForce(Vector2.down * GameValueManager.SetGetPlayerMovePower / 2, ForceMode2D.Force);
+        if(GameValueManager.SetGetIsPlayingGame && GameValueManager.SetGetIsStarted)
+        {
+            rb.AddForce(Vector2.down * GameValueManager.SetGetPlayerMovePower / 2, ForceMode2D.Force);
+        }
 
         //デバッグ用
         //if (Input.GetKey(KeyCode.UpArrow))
