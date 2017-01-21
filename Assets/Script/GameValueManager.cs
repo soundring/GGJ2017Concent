@@ -14,4 +14,5 @@ public class GameValueManager : MonoBehaviour {
 
     public static int SetGetObjectiveMaxCodeLength { set; get; }
     public static bool SetGetIsPlayingGame { set; get; }
+    public static float SetGetPlayerMovePower { set; get; }
 }
