@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class test : MonoBehaviour {
+public class PlayerMove : MonoBehaviour {
 
     private Rigidbody2D rb;
+    private float power = 200;
 
     void Awake()
     {
@@ -17,16 +18,19 @@ public class test : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        float power = 100;
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            rb.AddForce(Vector2.up * power, ForceMode2D.Force);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            rb.AddForce(Vector2.down * power, ForceMode2D.Force);
-        }
+	void FixedUpdate () {
+        //自動で下へ移動
+        rb.AddForce(Vector2.down * power / 2, ForceMode2D.Force);
+
+        //デバッグ用
+        //if (Input.GetKey(KeyCode.UpArrow))
+        //{
+        //    rb.AddForce(Vector2.up * power, ForceMode2D.Force);
+        //}
+        //else if (Input.GetKey(KeyCode.DownArrow))
+        //{
+        //    rb.AddForce(Vector2.down * power, ForceMode2D.Force);
+        //}
         if (Input.GetKey(KeyCode.RightArrow))
         {
             rb.AddForce(Vector2.right * power, ForceMode2D.Force);
