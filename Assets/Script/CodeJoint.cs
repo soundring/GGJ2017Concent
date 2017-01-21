@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CodeJoint : MonoBehaviour {
 
@@ -10,23 +11,55 @@ public class CodeJoint : MonoBehaviour {
     private HingeJoint2D nextConnectParts;
     private GameObject prefabCodeParts;
     private int codeLength;
+    private Text countDownText;
 
     void Awake()
     {
         joint = this.GetComponent<HingeJoint2D>();
         prefabCodeParts = Resources.Load("Prefab/CodeParts") as GameObject;
+        countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
     }
 
 	// Use this for initialization
 	void Start () {
 
-        StartCoroutine("CreateJoint");
+        StartCoroutine("StartCountDOwn");
     }
 	
 	// Update is called once per frame
 	void Update () {
         
 	}
+
+    /// <summary>
+    /// ゲーム開始カウントダウン
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator StartCountDOwn()
+    {
+
+        int count = 3;
+        countDownText.text = count.ToString();
+        while (true)
+        {
+            yield return new WaitForSeconds(1.1f);
+            count--;
+            if (count > 0)
+            {
+                countDownText.text = count.ToString();
+            }
+            else if (count <= 0)
+            {
+                countDownText.text = "はじめ!";
+                yield return new WaitForSeconds(1f);
+                countDownText.text = "";
+                StopCoroutine("StartCountDOwn");
+                GameValueManager.SetGetIsPlayingGame = true;
+                break;
+            }
+        }
+        StartCoroutine("CreateJoint");
+    }
 
     /// <summary>
     /// コードの延長
@@ -69,9 +102,25 @@ public class CodeJoint : MonoBehaviour {
     private IEnumerator CountDown()
     {
         yield return new WaitForSeconds(3f);
+        int count = 3;
+        countDownText.text = count.ToString();
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
+            count--;
+            if(count > 0)
+            {
+                countDownText.text = count.ToString();
+            }
+            else if(count <= 0)
+            {
+                countDownText.text = "そこまで!";
+                yield return new WaitForSeconds(3f);
+                countDownText.text = "";
+                StopCoroutine("CountDown");
+                GameValueManager.SetGetIsPlayingGame = false;
+                break;
+            }
         }
     }
 

@@ -9,7 +9,9 @@ public class GameValueManager : MonoBehaviour {
     void Awake()
     {
         SetGetObjectiveMaxCodeLength = maxLength;
+        SetGetIsPlayingGame = false;
     }
 
     public static int SetGetObjectiveMaxCodeLength { set; get; }
+    public static bool SetGetIsPlayingGame { set; get; }
 }
