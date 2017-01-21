@@ -20,7 +20,6 @@ public class CamerMove : MonoBehaviour {
     // Use this for initialization
     void Start () {
         clampedHeight = (int)(Screen.height * maxMoveClamp);
-        Debug.Log(clampedHeight);
     }
 	
 	// Update is called once per frame
