@@ -11,19 +11,34 @@ public class CodeJoint : MonoBehaviour {
     private HingeJoint2D nextConnectParts;
     private GameObject prefabCodeParts;
     private int codeLength;
-    private Text countDownText;
+    private Image countDownImage;
+    private Animation CountDownAnim;
+    private Sprite[] countImageList;
+    private Sprite startSprite;
+    private Sprite failureSprite;
+    private Image statusImage;
+
 
     void Awake()
     {
         joint = this.GetComponent<HingeJoint2D>();
         prefabCodeParts = Resources.Load("Prefab/CodeParts") as GameObject;
-        countDownText = GameObject.Find("CountDownText").GetComponent<Text>();
+        countDownImage = GameObject.Find("CountDownImage").GetComponent<Image>();
+        CountDownAnim = GameObject.Find("CountDownImage").GetComponent<Animation>();
+        countImageList = new Sprite[3];
+        countImageList[0] = Resources.Load<Sprite>("Image/1");
+        countImageList[1] = Resources.Load<Sprite>("Image/2");
+        countImageList[2] = Resources.Load<Sprite>("Image/3");
+        startSprite = Resources.Load("Image/start") as Sprite;
+        failureSprite = Resources.Load<Sprite>("Image/failure");
+        statusImage = GameObject.Find("GameStatusImage").GetComponent<Image>();
+        Debug.Log(countImageList[0]);
     }
 
 	// Use this for initialization
 	void Start () {
-
         StartCoroutine("StartCountDOwn");
+        statusImage.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -39,20 +54,22 @@ public class CodeJoint : MonoBehaviour {
     {
 
         int count = 3;
-        countDownText.text = count.ToString();
+        countDownImage.sprite = countImageList[count - 1];
         while (true)
         {
             yield return new WaitForSeconds(1.1f);
             count--;
             if (count > 0)
             {
-                countDownText.text = count.ToString();
+                //CountDownAnim.Play();
+                countDownImage.sprite = countImageList[count - 1];
             }
             else if (count <= 0)
             {
-                countDownText.text = "はじめ!";
+                countDownImage.enabled = false;
+                statusImage.enabled = true;
                 yield return new WaitForSeconds(1f);
-                countDownText.text = "";
+                statusImage.enabled = false;
                 StopCoroutine("StartCountDOwn");
                 GameValueManager.SetGetIsPlayingGame = true;
                 GameValueManager.SetGetIsStarted = true;
@@ -89,7 +106,10 @@ public class CodeJoint : MonoBehaviour {
                 }
                 else
                 {
-                    StartCoroutine("CountDown");
+                    if(GameValueManager.SetGetIsPlayingGame)
+                    {
+                        StartCoroutine("CountDown");
+                    }
                     StopCoroutine("CreateJoint");
                 }
             }
@@ -104,21 +124,24 @@ public class CodeJoint : MonoBehaviour {
     private IEnumerator CountDown()
     {
         yield return new WaitForSeconds(3f);
+        countDownImage.enabled = true;
+        statusImage.sprite = failureSprite;
         int count = 3;
-        countDownText.text = count.ToString();
+        countDownImage.sprite = countImageList[count - 1];
         while (true)
         {
             yield return new WaitForSeconds(1.5f);
             count--;
             if(count > 0)
             {
-                countDownText.text = count.ToString();
+                countDownImage.sprite = countImageList[count - 1];
             }
             else if(count <= 0)
             {
-                countDownText.text = "そこまで!";
+                countDownImage.enabled = false;
+                statusImage.enabled = true;
                 yield return new WaitForSeconds(3f);
-                countDownText.text = "";
+                statusImage.enabled = false;
                 StopCoroutine("CountDown");
                 GameValueManager.SetGetIsPlayingGame = false;
                 break;
