@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OutletGoal : MonoBehaviour
 {
@@ -94,6 +95,9 @@ public class OutletGoal : MonoBehaviour
             loopCount++;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        //TODO:リザルトをaddScene
+        //リザルトをaddScene
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+        StopCoroutine("ConnectingAction");
     }
 }

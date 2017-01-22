@@ -85,6 +85,7 @@ public class CodeJoint : MonoBehaviour {
                     nextConnectParts.connectedBody = newJoint.GetComponent<Rigidbody2D>();
                     nextConnectParts = newJointComp;
                     codeLength++;
+                    GameValueManager.SetGetUseCodeRatio = (float)codeLength / (float)GameValueManager.SetGetObjectiveMaxCodeLength;
                 }
                 else
                 {

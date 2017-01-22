@@ -16,4 +16,5 @@ public class GameValueManager : MonoBehaviour {
     public static bool SetGetIsStarted { set; get; }
     public static bool SetGetIsPlayingGame { set; get; }
     public static float SetGetPlayerMovePower { set; get; }
+    public static float SetGetUseCodeRatio { set; get; }
 }
