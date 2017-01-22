@@ -5,5 +5,5 @@
 - 暗闇の中プラグを探して移動します。
 
 - プラグに刺すことができればクリアです！
+![screenshot_20170122-165616](https://cloud.githubusercontent.com/assets/14822782/22181182/acb5f20e-e0c9-11e6-8d27-0cc8f53f7169.png)
 
-![タイトル画面](https://github.com/soundring/GGJ2017Concent/Screenshot_20170122-135514.png)
