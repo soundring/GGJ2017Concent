@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class OutletGoal : MonoBehaviour
 {
     private GameObject playerObj;
+    private Animator playerAnimator;
     private RawImage lightArea;
     private Image flash;
     private float a = 200;
@@ -35,6 +36,7 @@ public class OutletGoal : MonoBehaviour
         {
             playerObj = other.gameObject;
             playerObj.GetComponent<BoxCollider2D>().enabled = false;
+            playerAnimator = playerObj.GetComponent<Animator>();
             GameValueManager.SetGetIsPlayingGame = false;
             StartCoroutine("ConnectingAction");
         }
@@ -44,34 +46,39 @@ public class OutletGoal : MonoBehaviour
     {
         int loopCount = 0;
         Vector3 constPos;
+        //ズームアップ
         while (loopCount < 60)
         {
             var nowPlayerPos = playerObj.transform.position;
-            var targetPlayerPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.9f, playerObj.transform.position.z);
+            var targetPlayerPos = new Vector3(this.transform.position.x, this.transform.position.y + 1.8f, playerObj.transform.position.z);
             playerObj.transform.position = Vector3.Lerp(nowPlayerPos, targetPlayerPos, 0.3f);
 
-            var nowPlayerAng = playerObj.transform.eulerAngles;
-            var targetPlayerAng = Quaternion.LookRotation(this.transform.position - playerObj.transform.position).eulerAngles;
-            targetPlayerAng = new Vector3(0, 0, targetPlayerAng.z);
-            playerObj.transform.eulerAngles = Vector3.Lerp(nowPlayerAng, targetPlayerAng, 0.3f);
-
+            //var nowPlayerAng = playerObj.transform.eulerAngles;
+            //var targetPlayerAng = Quaternion.LookRotation(this.transform.position - playerObj.transform.position).eulerAngles;
+            //targetPlayerAng = new Vector3(0, 0, targetPlayerAng.z);
+            //playerObj.transform.eulerAngles = Vector3.Lerp(nowPlayerAng, targetPlayerAng, 0.3f);
+            playerAnimator.speed = 0;
             var nowCamPos = Camera.main.transform.position;
             var targetCamPos = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y, -5);
             Camera.main.transform.position = Vector3.Lerp(nowCamPos, targetCamPos, 0.3f);
             loopCount++;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        //差し込む
+        constPos = playerObj.transform.position;
         loopCount = 0;
         while (loopCount < 30)
         {
-            var nowPlayerPos = playerObj.transform.position;
-            var targetPlayerPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.3f, playerObj.transform.position.z);
-            playerObj.transform.position = Vector3.Lerp(nowPlayerPos, targetPlayerPos, 0.3f);
+            //var nowPlayerPos = playerObj.transform.position;
+            //var targetPlayerPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.3f, playerObj.transform.position.z);
+            playerObj.transform.position = constPos;
 
-            var nowPlayerAng = playerObj.transform.eulerAngles;
-            var targetPlayerAng = Quaternion.LookRotation(this.transform.position - playerObj.transform.position).eulerAngles;
-            targetPlayerAng = new Vector3(0, 0, targetPlayerAng.z);
-            playerObj.transform.eulerAngles = Vector3.Lerp(nowPlayerAng, targetPlayerAng, 0.3f);
+            //var nowPlayerAng = playerObj.transform.eulerAngles;
+            //var targetPlayerAng = Quaternion.LookRotation(this.transform.position - playerObj.transform.position).eulerAngles;
+            //targetPlayerAng = new Vector3(0, 0, targetPlayerAng.z);
+            //playerObj.transform.eulerAngles = Vector3.Lerp(nowPlayerAng, targetPlayerAng, 0.3f);
+            playerAnimator.speed = 1;
+            playerAnimator.SetBool("connectFlag", true);
 
             var nowCamPos = Camera.main.transform.position;
             var targetCamPos = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y, -5);
@@ -79,7 +86,7 @@ public class OutletGoal : MonoBehaviour
             loopCount++;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        constPos = playerObj.transform.position;
+        //ズームダウン
         loopCount = 0;
         while (loopCount < 60)
         {

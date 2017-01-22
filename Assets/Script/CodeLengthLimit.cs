@@ -21,6 +21,6 @@ public class CodeLengthLimit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        limitText.text = "延長可能残り:" + (GameValueManager.SetGetObjectiveMaxCodeLength - rootCodeJoint.GetUseCodeLength) + "m";
+        limitText.text = (GameValueManager.SetGetObjectiveMaxCodeLength - rootCodeJoint.GetUseCodeLength) + "m";
     }
 }

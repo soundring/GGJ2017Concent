@@ -77,9 +77,9 @@ public class CodeJoint : MonoBehaviour {
                     GameObject newJoint = Instantiate(prefabCodeParts) as GameObject;
                     HingeJoint2D newJointComp = newJoint.GetComponent<HingeJoint2D>();
                     newJoint.transform.SetParent(this.transform.parent);
-                    newJoint.transform.localPosition = new Vector3(0, -0.618f, 0);
+                    newJoint.transform.localPosition = new Vector3(0, -0.089f, 0);
                     newJoint.transform.localEulerAngles = new Vector3(0, 0, 0);
-                    newJointComp.connectedAnchor = new Vector2(0, -0.075f);
+                    newJointComp.connectedAnchor = new Vector2(0, -3.766256f);
                     newJoint.GetComponent<Rigidbody2D>().simulated = true;
                     newJointComp.connectedBody = this.GetComponent<Rigidbody2D>();
                     nextConnectParts.connectedBody = newJoint.GetComponent<Rigidbody2D>();
@@ -93,7 +93,7 @@ public class CodeJoint : MonoBehaviour {
                     StopCoroutine("CreateJoint");
                 }
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
