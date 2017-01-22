@@ -144,6 +144,7 @@ public class CodeJoint : MonoBehaviour {
                 //yield return new WaitForSeconds(3f);
                 //statusImage.enabled = false;
                 SceneManager.LoadScene("Failure", LoadSceneMode.Additive);
+                SoundController.ChangeBGM(Resources.Load("BGM/failure") as AudioClip, false);
                 StopCoroutine("CountDown");
                 GameValueManager.SetGetIsPlayingGame = false;
                 break;

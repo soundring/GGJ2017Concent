@@ -11,11 +11,16 @@ public class OutletGoal : MonoBehaviour
     private RawImage lightArea;
     private Image flash;
     private float a = 200;
+    private AudioSource audioSource;
+    public AudioClip connectSe;
+    public AudioClip lightSe;
+    private bool isSePlay = false;
 
     void Awake()
     {
         lightArea = GameObject.Find("LightArea").GetComponent<RawImage>();
         flash = GameObject.Find("Flash").GetComponent<Image>();
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     // Use this for initialization
@@ -69,6 +74,11 @@ public class OutletGoal : MonoBehaviour
         loopCount = 0;
         while (loopCount < 30)
         {
+            if(!isSePlay)
+            {
+                audioSource.PlayOneShot(connectSe);
+                isSePlay = true;
+            }
             //var nowPlayerPos = playerObj.transform.position;
             //var targetPlayerPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.3f, playerObj.transform.position.z);
             playerObj.transform.position = constPos;
@@ -88,8 +98,14 @@ public class OutletGoal : MonoBehaviour
         }
         //ズームダウン
         loopCount = 0;
+        isSePlay = false;
         while (loopCount < 60)
         {
+            if (!isSePlay)
+            {
+                audioSource.PlayOneShot(lightSe);
+                isSePlay = true;
+            }
             var nowSize = lightArea.rectTransform.sizeDelta;
             var targetCamSize = new Vector2(5000, 5000);
             lightArea.rectTransform.sizeDelta = Vector3.Lerp(nowSize, targetCamSize, 0.05f);
@@ -105,6 +121,7 @@ public class OutletGoal : MonoBehaviour
         //リザルトをaddScene
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("Result", LoadSceneMode.Additive);
+        SoundController.ChangeBGM(Resources.Load("BGM/crear") as AudioClip, false);
         StopCoroutine("ConnectingAction");
     }
 }
