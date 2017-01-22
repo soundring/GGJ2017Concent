@@ -107,7 +107,7 @@ public class OutletGoal : MonoBehaviour
                 isSePlay = true;
             }
             var nowSize = lightArea.rectTransform.sizeDelta;
-            var targetCamSize = new Vector2(5000, 5000);
+            var targetCamSize = new Vector2(100000, 100000);
             lightArea.rectTransform.sizeDelta = Vector3.Lerp(nowSize, targetCamSize, 0.05f);
             var nowCamPos = Camera.main.transform.position;
             var targetCamPos = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y, -10);
