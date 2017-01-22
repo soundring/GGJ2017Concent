@@ -35,7 +35,7 @@ public class OutletGoal : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             playerObj = other.gameObject;
-            playerObj.GetComponent<BoxCollider2D>().enabled = false;
+            playerObj.GetComponent<CircleCollider2D>().enabled = false;
             playerAnimator = playerObj.GetComponent<Animator>();
             GameValueManager.SetGetIsPlayingGame = false;
             StartCoroutine("ConnectingAction");
