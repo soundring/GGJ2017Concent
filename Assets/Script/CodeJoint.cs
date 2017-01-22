@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CodeJoint : MonoBehaviour {
@@ -125,7 +126,7 @@ public class CodeJoint : MonoBehaviour {
     {
         yield return new WaitForSeconds(3f);
         countDownImage.enabled = true;
-        statusImage.sprite = failureSprite;
+        //statusImage.sprite = failureSprite;
         int count = 3;
         countDownImage.sprite = countImageList[count - 1];
         while (true)
@@ -139,9 +140,10 @@ public class CodeJoint : MonoBehaviour {
             else if(count <= 0)
             {
                 countDownImage.enabled = false;
-                statusImage.enabled = true;
-                yield return new WaitForSeconds(3f);
-                statusImage.enabled = false;
+                //statusImage.enabled = true;
+                //yield return new WaitForSeconds(3f);
+                //statusImage.enabled = false;
+                SceneManager.LoadScene("Failure", LoadSceneMode.Additive);
                 StopCoroutine("CountDown");
                 GameValueManager.SetGetIsPlayingGame = false;
                 break;
