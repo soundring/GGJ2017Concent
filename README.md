@@ -6,3 +6,4 @@
 
 - プラグに刺すことができればクリアです！
 
+https://raw.github.com/soundring/GGJ2017Concent/Screenshot_20170122-135514.png
