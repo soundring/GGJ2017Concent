@@ -17,6 +17,7 @@ public class ButtonLoadScene : MonoBehaviour {
 
     public void Transition(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
